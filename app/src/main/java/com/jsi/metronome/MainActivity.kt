@@ -38,7 +38,6 @@ import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -47,13 +46,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleEventObserver
-import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.jsi.metronome.service.MetronomeService
 import com.jsi.metronome.ui.metronome.MetronomeScreen
-import com.jsi.metronome.ui.navigation.Screen
 import com.jsi.metronome.ui.pitchpipe.PitchPipeScreen
 import com.jsi.metronome.ui.settings.SettingsScreen
 import com.jsi.metronome.ui.tuner.TunerScreen
@@ -75,6 +70,10 @@ class MainActivity : ComponentActivity() {
             metronomeService = (binder as MetronomeService.LocalBinder).service
             metronomeService?.onTick = { metronomeViewModel.onTick() }
             serviceBound = true
+            // Sync: if service stopped itself while we were backgrounded, update ViewModel
+            if (metronomeViewModel.isPlaying.value && metronomeService?.getIsPlaying() != true) {
+                metronomeViewModel.setPlaying(false)
+            }
         }
 
         override fun onServiceDisconnected(name: ComponentName?) {
@@ -109,8 +108,6 @@ class MainActivity : ComponentActivity() {
                 val isPlaying by metronomeViewModel.isPlaying.collectAsStateWithLifecycle()
                 val bpm by metronomeViewModel.bpm.collectAsStateWithLifecycle()
                 val subdivision by metronomeViewModel.subdivision.collectAsStateWithLifecycle()
-                val backgroundPlayback by settingsViewModel.backgroundPlayback.collectAsStateWithLifecycle()
-
                 // Start/stop service when play state changes (waits for service binding)
                 LaunchedEffect(isPlaying, serviceBound) {
                     if (isPlaying) {
@@ -121,7 +118,7 @@ class MainActivity : ComponentActivity() {
                             }
                         }
                     } else {
-                        metronomeService?.stopMetronome()
+                        metronomeService?.stopService()
                     }
                 }
 
@@ -139,19 +136,6 @@ class MainActivity : ComponentActivity() {
                     }
                 }
 
-                // Handle background playback setting
-                val lifecycleOwner = LocalLifecycleOwner.current
-                DisposableEffect(lifecycleOwner, backgroundPlayback) {
-                    val observer = LifecycleEventObserver { _, event ->
-                        if (event == Lifecycle.Event.ON_STOP && !backgroundPlayback && isPlaying) {
-                            metronomeViewModel.setPlaying(false)
-                            metronomeService?.stopMetronome()
-                        }
-                    }
-                    lifecycleOwner.lifecycle.addObserver(observer)
-                    onDispose { lifecycleOwner.lifecycle.removeObserver(observer) }
-                }
-
                 JSIMetronomeApp(
                     metronomeViewModel = metronomeViewModel,
                     settingsViewModel = settingsViewModel,
@@ -165,11 +149,21 @@ class MainActivity : ComponentActivity() {
 
     override fun onStart() {
         super.onStart()
-        bindToService()
+        // Only rebind if the service should still be running (avoids creating it unnecessarily)
+        if (metronomeViewModel.isPlaying.value) {
+            bindToService()
+        }
     }
 
     override fun onStop() {
         super.onStop()
+        if (!settingsViewModel.backgroundPlayback.value && metronomeViewModel.isPlaying.value) {
+            metronomeViewModel.setPlaying(false)
+            // Stop via bound reference if available (immediate audio stop)
+            metronomeService?.stopService()
+            // Also stop via Context.stopService — works even if bound reference is null
+            stopService(Intent(this, MetronomeService::class.java))
+        }
         if (serviceBound) {
             unbindService(serviceConnection)
             serviceBound = false
@@ -194,12 +188,11 @@ private enum class Tab(
     val label: String,
     val filledIcon: ImageVector,
     val outlinedIcon: ImageVector,
-    val screen: Screen,
 ) {
-    Metronome("Metronome", Icons.Filled.MusicNote, Icons.Outlined.MusicNote, Screen.Metronome),
-    PitchPipe("Pitch Pipe", Icons.Filled.Tune, Icons.Outlined.Tune, Screen.PitchPipe),
-    Tuner("Tuner", Icons.Filled.GraphicEq, Icons.Outlined.GraphicEq, Screen.Tuner),
-    Settings("Settings", Icons.Filled.Settings, Icons.Outlined.Settings, Screen.Settings),
+    Metronome("Metronome", Icons.Filled.MusicNote, Icons.Outlined.MusicNote),
+    PitchPipe("Pitch Pipe", Icons.Filled.Tune, Icons.Outlined.Tune),
+    Tuner("Tuner", Icons.Filled.GraphicEq, Icons.Outlined.GraphicEq),
+    Settings("Settings", Icons.Filled.Settings, Icons.Outlined.Settings),
 }
 
 @Composable

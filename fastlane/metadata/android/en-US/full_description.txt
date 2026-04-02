@@ -1,0 +1,13 @@
+JSI Metronome is a minimalist music practice tool built with precision timing and a clean Material 3 interface.
+
+Features:
+- Metronome with 30–250 BPM range and subdivisions (1–9)
+- Drift-free timing using AudioTrack for low-latency click playback
+- Pendulum and dial visualizations
+- Pitch pipe for all 12 chromatic notes
+- Chromatic tuner with real-time frequency detection
+- Background playback via foreground service
+- Light, dark, and system theme modes
+- Dynamic Material You colors
+
+No ads. No trackers. No internet permission. Fully open source.

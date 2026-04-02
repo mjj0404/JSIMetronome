@@ -1,12 +1,15 @@
 *.iml
 .gradle
 /local.properties
+local.properties
 /.idea
 .DS_Store
 .claude/settings.local.json
 /build
+/app/build
 /captures
 .externalNativeBuild
 .cxx
-local.properties
 prompt.txt
+*.jks
+*.keystore

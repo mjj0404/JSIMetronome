@@ -61,9 +61,7 @@ class MetronomeService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         if (intent?.action == ACTION_STOP) {
-            stopMetronome()
-            stopForeground(STOP_FOREGROUND_REMOVE)
-            stopSelf()
+            stopService()
             return START_NOT_STICKY
         }
         return START_STICKY
@@ -71,6 +69,7 @@ class MetronomeService : Service() {
 
     override fun onDestroy() {
         stopMetronome()
+        stopForeground(STOP_FOREGROUND_REMOVE)
         audioTrack?.release()
         audioTrack = null
         subAudioTrack?.release()
@@ -102,6 +101,13 @@ class MetronomeService : Service() {
         handlerThread?.quitSafely()
         handlerThread = null
         handler = null
+    }
+
+    /** Stops playback, removes the foreground notification, and stops the service. */
+    fun stopService() {
+        stopMetronome()
+        stopForeground(STOP_FOREGROUND_REMOVE)
+        stopSelf()
     }
 
     fun updateBpm(newBpm: Int) {
