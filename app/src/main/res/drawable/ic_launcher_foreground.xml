@@ -1,0 +1,77 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Metronome body — trapezoid/triangle shape -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M42,82 L34,82 Q32,82 32.5,80 L49,32 Q50,29 51,29 L57,29 Q58,29 59,32 L75.5,80 Q76,82 74,82 L66,82 Z"
+        android:fillAlpha="0.95" />
+
+    <!-- Inner face plate — darker inset -->
+    <path
+        android:fillColor="#1A1614"
+        android:pathData="M45,78 L39,78 Q37.5,78 38,76.5 L51,36 Q51.5,34.5 52.5,34.5 L55.5,34.5 Q56.5,34.5 57,36 L70,76.5 Q70.5,78 69,78 L63,78 Z"
+        android:fillAlpha="0.15" />
+
+    <!-- Pendulum arm — tilted to show motion -->
+    <path
+        android:fillColor="#E8734A"
+        android:strokeColor="#E8734A"
+        android:strokeWidth="2.8"
+        android:pathData="M54,75 L42,33"
+        android:strokeLineCap="round" />
+
+    <!-- Pendulum weight — circle at top of arm -->
+    <path
+        android:fillColor="#E8734A"
+        android:pathData="M42,33 m-4.5,0 a4.5,4.5 0,1 1,9 0 a4.5,4.5 0,1 1,-9 0" />
+
+    <!-- Pivot point at bottom -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M54,75 m-3,0 a3,3 0,1 1,6 0 a3,3 0,1 1,-6 0" />
+
+    <!-- Tick marks on face — left -->
+    <path
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="1.2"
+        android:pathData="M47,65 L44,65"
+        android:strokeLineCap="round"
+        android:strokeAlpha="0.5" />
+    <path
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="1.2"
+        android:pathData="M48.5,58 L45.5,58"
+        android:strokeLineCap="round"
+        android:strokeAlpha="0.5" />
+    <path
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="1.2"
+        android:pathData="M50,51 L47,51"
+        android:strokeLineCap="round"
+        android:strokeAlpha="0.5" />
+
+    <!-- Tick marks on face — right -->
+    <path
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="1.2"
+        android:pathData="M61,65 L64,65"
+        android:strokeLineCap="round"
+        android:strokeAlpha="0.5" />
+    <path
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="1.2"
+        android:pathData="M59.5,58 L62.5,58"
+        android:strokeLineCap="round"
+        android:strokeAlpha="0.5" />
+    <path
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="1.2"
+        android:pathData="M58,51 L61,51"
+        android:strokeLineCap="round"
+        android:strokeAlpha="0.5" />
+
+</vector>
