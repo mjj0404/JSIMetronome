@@ -1,12 +1,19 @@
 # JSI Metronome
 
-A clean, minimal metronome app for Android built with Jetpack Compose and Material 3 dynamic color.
+A clean, minimal metronome app does the job, built for Android with Jetpack Compose and Material 3 dynamic color.
+
+<img width="188" height="390" alt="Screenshot 2026-04-01 at 22 35 35" src="https://github.com/user-attachments/assets/3413ed1d-58d8-4ac5-a349-f59e15293baf" />
+<img width="178" height="384" alt="Screenshot 2026-04-01 at 22 37 22" src="https://github.com/user-attachments/assets/82dccc05-f310-4ba5-ad29-1195a6bfe8cc" />
+<img width="188" height="390" alt="Screenshot 2026-04-01 at 22 35 35" src="https://github.com/user-attachments/assets/a15805a7-c767-49a8-a6c0-aaddd0ac729c" />
+<img width="182" height="381" alt="Screenshot 2026-04-01 at 22 36 59" src="https://github.com/user-attachments/assets/6dcaf0b4-257a-4c0e-b69b-f76e6f039474" />
+<img width="178" height="383" alt="Screenshot 2026-04-01 at 22 37 12" src="https://github.com/user-attachments/assets/bf3e4f11-ae46-447a-b2c1-96550e4630cb" />
+
 
 ## Features
 
-- **Precise metronome** — drift-free timing using AudioTrack with Handler on a dedicated thread
+- **Precise Metronome** — drift-free timing using AudioTrack with Handler on a dedicated thread
 - **Dial control** — intuitive circular BPM dial with sweep gradient arc and tick marks
-- **Pendulum animation** — smooth sine-mapped swing with natural deceleration at extremes
+- **Mechanical Metronome Animation** — smooth sine-mapped swing with natural deceleration at extremes
 - **Tap tempo** — tap to detect BPM
 - **Pitch pipe** — sine wave tone generator with clean fade in/out
 - **Foreground service** — audio continues when the app is backgrounded
@@ -20,14 +27,6 @@ A clean, minimal metronome app for Android built with Jetpack Compose and Materi
 - DataStore Preferences
 - Navigation Compose (type-safe routes with kotlinx-serialization)
 - Min SDK 33, Target SDK 35
-
-## Building
-
-Open the project in Android Studio and run on a device or emulator with API 33+.
-
-```bash
-./gradlew assembleDebug
-```
 
 ## License
 
