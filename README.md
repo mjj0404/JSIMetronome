@@ -2,7 +2,6 @@
 
 A clean, minimal metronome app does the job, built for Android with Jetpack Compose and Material 3 dynamic color.
 
-<img width="188" height="390" alt="Screenshot 2026-04-01 at 22 35 35" src="https://github.com/user-attachments/assets/3413ed1d-58d8-4ac5-a349-f59e15293baf" />
 <img width="178" height="384" alt="Screenshot 2026-04-01 at 22 37 22" src="https://github.com/user-attachments/assets/82dccc05-f310-4ba5-ad29-1195a6bfe8cc" />
 <img width="188" height="390" alt="Screenshot 2026-04-01 at 22 35 35" src="https://github.com/user-attachments/assets/a15805a7-c767-49a8-a6c0-aaddd0ac729c" />
 <img width="182" height="381" alt="Screenshot 2026-04-01 at 22 36 59" src="https://github.com/user-attachments/assets/6dcaf0b4-257a-4c0e-b69b-f76e6f039474" />
